@@ -261,7 +261,7 @@ namespace Braintree.TestUtil
             return query;
 #else
             string trData = TrUtil.BuildTrData(trParams, "http://example.com", service);
-            string postData = "tr_data=" + HttpUtility.UrlEncode(trData, Encoding.UTF8) + "&";
+            string postData = "tr_data=" + Uri.EscapeDataString(trData) + "&";
             postData += req.ToQueryString();
 
             var request = WebRequest.Create(postURL) as HttpWebRequest;

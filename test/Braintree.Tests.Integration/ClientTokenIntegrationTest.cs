@@ -47,13 +47,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task GenerateAsync_GeneratesFingerprintAcceptedByGateway()
-#else
-        public void GenerateAsync_GeneratesFingerprintAcceptedByGateway()
-        {
-            Task.Run(async() =>
-#endif
         {
             var encodedClientToken = await gateway.ClientToken.GenerateAsync();
             var decodedClientToken = Encoding.UTF8.GetString(Convert.FromBase64String(encodedClientToken));
@@ -72,9 +66,5 @@ namespace Braintree.Tests.Integration
 
             Assert.AreEqual(response.StatusCode, HttpStatusCode.OK);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
     }
 }

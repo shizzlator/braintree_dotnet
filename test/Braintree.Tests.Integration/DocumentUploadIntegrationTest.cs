@@ -75,13 +75,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task CreateAsync_returnsSuccessfulWithValidRequest()
-#else
-        public void CreateAsync_returnsSuccessfulWithValidRequest()
-        {
-            Task.Run(async () =>
-#endif
         {
             FileStream fs = new FileStream(BT_LOGO_PATH, FileMode.Open, FileAccess.Read);
             DocumentUploadRequest request = new DocumentUploadRequest();
@@ -95,10 +89,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual("image/png", documentUpload.ContentType);
             Assert.AreEqual(2443m, documentUpload.Size);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Create_throwsWithEmptyKind()
@@ -111,13 +101,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task CreateAsync_throwsWithEmptyKind()
-#else
-        public void CreateAsync_throwsWithEmptyKind()
-        {
-            Task.Run(async () =>
-#endif
         {
             FileStream fs = new FileStream(BT_LOGO_PATH, FileMode.Open, FileAccess.Read);
             DocumentUploadRequest request = new DocumentUploadRequest();
@@ -132,10 +116,6 @@ namespace Braintree.Tests.Integration
                 Assert.AreEqual(exception.Message, "DocumentKind must not be null");
             }
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Create_throwsWithEmptyFile()
@@ -147,13 +127,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task CreateAsync_throwsWithEmptyFile()
-#else
-        public void CreateAsync_throwsWithEmptyFile()
-        {
-            Task.Run(async () =>
-#endif
         {
             DocumentUploadRequest request = new DocumentUploadRequest();
             request.DocumentKind = DocumentUploadKind.EVIDENCE_DOCUMENT; 
@@ -167,10 +141,6 @@ namespace Braintree.Tests.Integration
                 Assert.AreEqual(exception.Message, "File must not be null");
             }
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Create_returnsErrorWithUnsupportedFileType()
@@ -187,13 +157,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task CreateAsync_returnsErrorWithUnsupportedFileType()
-#else
-        public void CreateAsync_returnsErrorWithUnsupportedFileType()
-        {
-            Task.Run(async () =>
-#endif
         {
             FileStream fs = new FileStream(GIF_EXTENSION_FILE_PATH, FileMode.Open, FileAccess.Read);
             DocumentUploadRequest request = new DocumentUploadRequest();
@@ -205,10 +169,6 @@ namespace Braintree.Tests.Integration
 
             Assert.AreEqual(ValidationErrorCode.DOCUMENT_UPLOAD_FILE_TYPE_IS_INVALID, result.Errors.ForObject("DocumentUpload").OnField("File")[0].Code);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Create_returnsErrorWithMalformedFile()
@@ -225,13 +185,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task CreateAsync_returnsErrorWithMalformedFile()
-#else
-        public void CreateAsync_returnsErrorWithMalformedFile()
-        {
-            Task.Run(async () =>
-#endif
         {
             FileStream fs = new FileStream(MALFORMED_FILE_PATH, FileMode.Open, FileAccess.Read);
             DocumentUploadRequest request = new DocumentUploadRequest();
@@ -243,10 +197,6 @@ namespace Braintree.Tests.Integration
 
             Assert.AreEqual(ValidationErrorCode.DOCUMENT_UPLOAD_FILE_IS_MALFORMED_OR_ENCRYPTED, result.Errors.ForObject("DocumentUpload").OnField("File")[0].Code);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Create_returnsErrorWhenFileIsOver4Mb()
@@ -269,13 +219,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task CreateAsync_returnsErrorWhenFileIsOver4Mb()
-#else
-        public void CreateAsync_returnsErrorWhenFileIsOver4Mb()
-        {
-            Task.Run(async () =>
-#endif
         {
             using(StreamWriter writetext = new StreamWriter(new FileStream(LARGE_FILE_PATH, FileMode.OpenOrCreate, FileAccess.ReadWrite)))
             {
@@ -293,9 +237,5 @@ namespace Braintree.Tests.Integration
 
             Assert.AreEqual(ValidationErrorCode.DOCUMENT_UPLOAD_FILE_IS_TOO_LARGE, result.Errors.ForObject("DocumentUpload").OnField("File")[0].Code);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
     }
 }

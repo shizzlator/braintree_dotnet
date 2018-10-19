@@ -63,13 +63,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task AllAsync_ReturnsAllAddOns()
-#else
-        public void AllAsync_ReturnsAllAddOns()
-        {
-            Task.Run(async() =>
-#endif
         {
             string addOnId = string.Format("dotnet_add_on{0}", new Random().Next(1000000).ToString());
             await service.PostAsync(service.MerchantPath() + "/modifications/create_modification_for_tests", new ModificationRequestForTests {
@@ -103,9 +97,5 @@ namespace Braintree.Tests.Integration
             Assert.IsNotNull(addOn.CreatedAt);
             Assert.IsNotNull(addOn.UpdatedAt);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
     }
 }

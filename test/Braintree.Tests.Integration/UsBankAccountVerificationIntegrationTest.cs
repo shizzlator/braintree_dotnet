@@ -281,13 +281,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task SearchAsync_OnMultipleValueFields()
-#else
-        public void SearchAsync_OnMultipleValueFields()
-        {
-            Task.Run(async () =>
-#endif
         {
             Result<Customer> customer = await gateway.Customer.CreateAsync(new CustomerRequest());
             Assert.IsTrue(customer.IsSuccess());
@@ -330,10 +324,6 @@ namespace Braintree.Tests.Integration
 
             Assert.AreEqual(2, collection.MaximumCount);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Search_OnTextFields()

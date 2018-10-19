@@ -62,13 +62,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task CreateAsync_CreatesAddressForGivenCustomerId()
-#else
-        public void CreateAsync_CreatesAddressForGivenCustomerId()
-        {
-            Task.Run(async() =>
-#endif
         {
             Result<Customer> customerResult = await gateway.Customer.CreateAsync(new CustomerRequest());
             Customer customer = customerResult.Target;
@@ -107,10 +101,6 @@ namespace Braintree.Tests.Integration
             Assert.IsNotNull(address.CreatedAt);
             Assert.IsNotNull(address.UpdatedAt);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Find_FindsAddress()
@@ -145,13 +135,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task FindAsync_FindsAddress()
-#else
-        public void FindAsync_FindsAddress()
-        {
-            Task.Run(async() =>
-#endif
         {
             Result<Customer> customerResult = await gateway.Customer.CreateAsync(new CustomerRequest());
             Customer customer = customerResult.Target;
@@ -244,13 +228,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task UpdateAsync_UpdatesAddressForGivenCustomerIdAndAddressId()
-#else
-        public void UpdateAsync_UpdatesAddressForGivenCustomerIdAndAddressId()
-        {
-            Task.Run(async() =>
-#endif
         {
             Result<Customer> customerResult = await gateway.Customer.CreateAsync(new CustomerRequest());
             Customer customer = customerResult.Target;
@@ -306,10 +284,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual("USA", address.CountryCodeAlpha3);
             Assert.AreEqual("840", address.CountryCodeNumeric);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Update_ReturnsAnErrorResult_ForInconsistenCountry()
@@ -381,13 +355,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task DeleteAsync_DeletesTheAddress()
-#else
-        public void DeleteAsync_DeletesTheAddress()
-        {
-            Task.Run(async() =>
-#endif
         {
             Result<Customer> customerResult = await gateway.Customer.CreateAsync(new CustomerRequest());
             Customer customer = customerResult.Target;
@@ -410,11 +378,7 @@ namespace Braintree.Tests.Integration
             }
 
             Assert.Throws<NotFoundException> (() => gateway.Address.Find(customer.Id, createdAddress.Id));
-        }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
+        } 
 
         [Test]
         public void Create_ReturnsAnErrorResult()

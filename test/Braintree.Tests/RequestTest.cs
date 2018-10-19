@@ -2,9 +2,7 @@ using Braintree.TestUtil;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Globalization;
-#if net452
 using System.Threading;
-#endif
 
 namespace Braintree.Tests
 {

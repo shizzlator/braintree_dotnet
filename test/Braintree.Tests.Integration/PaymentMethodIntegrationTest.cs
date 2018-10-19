@@ -224,13 +224,7 @@ namespace Braintree.Tests.Integration
         }
         
         [Test]
-#if netcore
         public async Task CreateAsync_CreatesCreditCardWithNonce()
-#else
-        public void CreateAsync_CreatesCreditCardWithNonce()
-        {
-            Task.Run(async () =>
-#endif
         {
             string nonce = TestHelper.GenerateUnlockedNonce(gateway);
             Result<Customer> result = gateway.Customer.Create(new CustomerRequest());
@@ -248,10 +242,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(result.Target.Id, paymentMethodResult.Target.CustomerId);
             Assert.IsInstanceOf(typeof(CreditCard), paymentMethodResult.Target);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Create_CreatesCreditCardWithNonceAndDeviceData()
@@ -841,13 +831,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task DeleteAsync_DeletesCreditCard()
-#else
-        public void DeleteAsync_DeletesCreditCard()
-        {
-            Task.Run(async () =>
-#endif
         {
             var customer = await gateway.Customer.CreateAsync(new CustomerRequest());
 
@@ -863,10 +847,6 @@ namespace Braintree.Tests.Integration
 
             Assert.IsTrue(deleteResult.IsSuccess());
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Delete_DeletesPayPalAccount()
@@ -939,13 +919,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task FindAsync_FindsCreditCard()
-#else
-        public void FindAsync_FindsCreditCard()
-        {
-            Task.Run(async () =>
-#endif
         {
             var request = new PaymentMethodRequest
             {
@@ -958,10 +932,6 @@ namespace Braintree.Tests.Integration
             PaymentMethod found = await gateway.PaymentMethod.FindAsync(result.Target.Token);
             Assert.AreEqual(result.Target.Token, found.Token);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Find_FindsPayPalAccount()
@@ -1066,13 +1036,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task UpdateAsync_UpdatesTheCreditCard()
-#else
-        public void UpdateAsync_UpdatesTheCreditCard()
-        {
-            Task.Run(async () =>
-#endif
         {
             var MASTERCARD = SandboxValues.CreditCardNumber.MASTER_CARD;
             var customerResult = await gateway.Customer.CreateAsync();
@@ -1107,10 +1071,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(MASTERCARD.Substring(MASTERCARD.Length - 4), updatedCreditCard.LastFour);
             Assert.AreEqual("06/2013", updatedCreditCard.ExpirationDate);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Update_NoLongerSupportsUpdateWithCoinbaseAccount()

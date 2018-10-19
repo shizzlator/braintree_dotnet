@@ -40,14 +40,7 @@ namespace Braintree.Tests
         }
 
         [Test]
-#if netcore
-        public async Task AcceptAsync_nullOrEmptyThrowsNotFoundException()
-#else
-        public void AcceptAsync_nullOrEmptyThrowsNotFoundException()
-        {
-            Task.Run(async () =>
-#endif
-        {
+        public async Task AcceptAsync_nullOrEmptyThrowsNotFoundException() { 
             try
             {
                 await disputeGateway.AcceptAsync(null);
@@ -68,10 +61,6 @@ namespace Braintree.Tests
                 Assert.AreEqual(exception.Message, "dispute with id ' ' not found");
             }
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void AddFileEvidenceWithRequest_nullOrEmptyDisputeIdThrowsNotFoundException()
@@ -84,14 +73,8 @@ namespace Braintree.Tests
         }
 
         [Test]
-#if netcore
         public async Task AddFileEvidence_nullOrEmptyDisputeIdThrowsNotFoundExceptionAsync()
-#else
-        public void AddFileEvidence_nullOrEmptyDisputeIdThrowsNotFoundExceptionAsync()
-        {
-            Task.Run(async () =>
-#endif
-        {
+        { 
             try
             {
                 await disputeGateway.AddFileEvidenceAsync(null, "evidence");
@@ -112,10 +95,6 @@ namespace Braintree.Tests
                 Assert.AreEqual(exception.Message, "dispute with id ' ' not found");
             }
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void AddFileEvidence_nullOrEmptyDocumentUploadIdThrowsNotFoundException()
@@ -128,13 +107,7 @@ namespace Braintree.Tests
         }
 
         [Test]
-#if netcore
         public async Task AddFileEvidence_nullOrEmptyDocumentUploadIdThrowsNotFoundExceptionAsync()
-#else
-        public void AddFileEvidence_nullOrEmptyDocumentUploadIdThrowsNotFoundExceptionAsync()
-        {
-            Task.Run(async () =>
-#endif
         {
             try
             {
@@ -156,10 +129,6 @@ namespace Braintree.Tests
                 Assert.AreEqual(exception.Message, "document with id ' ' not found");
             }
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void AddTextEvidence_nullOrEmptyDisputeIdThrowsNotFoundException()
@@ -172,13 +141,7 @@ namespace Braintree.Tests
         }
 
         [Test]
-#if netcore
         public async Task AddTextEvidence_nullOrEmptyDisputeIdThrowsNotFoundExceptionAsync()
-#else
-        public void AddTextEvidence_nullOrEmptyDisputeIdThrowsNotFoundExceptionAsync()
-        {
-            Task.Run(async () =>
-#endif
         {
             try
             {
@@ -200,10 +163,6 @@ namespace Braintree.Tests
                 Assert.AreEqual(exception.Message, "Dispute with ID ' ' not found");
             }
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void AddTextEvidence_nullOrEmptyContentThrowsArgumentException()
@@ -254,13 +213,7 @@ namespace Braintree.Tests
         }
 
         [Test]
-#if netcore
         public async Task AddTextEvidenceAsync_nullOrEmptyContentThrowsArgumentExceptionAsync()
-#else
-        public void AddTextEvidenceAsync_nullOrEmptyContentThrowsArgumentExceptionAsync()
-        {
-            Task.Run(async () =>
-#endif
         {
             string Content = null;
             try
@@ -312,21 +265,11 @@ namespace Braintree.Tests
                 Assert.AreEqual(exception.Message, "Content cannot be empty");
             }
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
 
 
         [Test]
-#if netcore
         public async Task AddTextEvidenceAsync_nonIntegerSequenceNumberThrowsArgumentExceptionAsync()
-#else
-        public void AddTextEvidenceAsync_nonIntegerSequenceNumberThrowsArgumentExceptionAsync()
-        {
-            Task.Run(async () =>
-#endif
         {
             TextEvidenceRequest textEvidenceRequest = new TextEvidenceRequest()
             {
@@ -360,10 +303,6 @@ namespace Braintree.Tests
                 Assert.AreEqual(exception.Message, "SequenceNumber must be an integer");
             }
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Finalize_nullOrEmptyThrowsNotFoundException()
@@ -376,13 +315,7 @@ namespace Braintree.Tests
         }
 
         [Test]
-#if netcore
         public async Task FinalizeAsync_nullOrEmptyThrowsNotFoundException()
-#else
-        public void FinalizeAsync_nullOrEmptyThrowsNotFoundException()
-        {
-            Task.Run(async () =>
-#endif
         {
             try
             {
@@ -404,10 +337,6 @@ namespace Braintree.Tests
                 Assert.AreEqual(exception.Message, "dispute with id ' ' not found");
             }
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Find_nullOrEmptyThrowsNotFoundException()
@@ -420,13 +349,7 @@ namespace Braintree.Tests
         }
 
         [Test]
-#if netcore
         public async Task FindAsync_nullOrEmptyThrowsNotFoundException()
-#else
-        public void FindAsync_nullOrEmptyThrowsNotFoundException()
-        {
-            Task.Run(async () =>
-#endif
         {
             try
             {
@@ -448,10 +371,6 @@ namespace Braintree.Tests
                 Assert.AreEqual(exception.Message, "dispute with id ' ' not found");
             }
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void RemoveEvidence_nullOrEmptyDisputeIdThrowsNotFoundException()
@@ -464,13 +383,7 @@ namespace Braintree.Tests
         }
 
         [Test]
-#if netcore
         public async Task RemoveEvidence_nullOrEmptyDisputeIdThrowsNotFoundExceptionAsync()
-#else
-        public void RemoveEvidence_nullOrEmptyDisputeIdThrowsNotFoundExceptionAsync()
-        {
-            Task.Run(async () =>
-#endif
         {
             try
             {
@@ -492,10 +405,6 @@ namespace Braintree.Tests
                 Assert.AreEqual(exception.Message, "evidence with id 'evidence' for dispute with id ' ' not found");
             }
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void RemoveEvidence_nullOrEmptyEvidenceIdThrowsNotFoundException()
@@ -508,13 +417,7 @@ namespace Braintree.Tests
         }
 
         [Test]
-#if netcore
         public async Task RemoveEvidence_nullOrEmptyEvidenceIdThrowsNotFoundExceptionAsync()
-#else
-        public void RemoveEvidence_nullOrEmptyEvidenceIdThrowsNotFoundExceptionAsync()
-        {
-            Task.Run(async () =>
-#endif
         {
             try
             {
@@ -536,9 +439,5 @@ namespace Braintree.Tests
                 Assert.AreEqual(exception.Message, "evidence with id ' ' for dispute with id 'dispute' not found");
             }
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
     }
 }

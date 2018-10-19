@@ -85,13 +85,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task CreateAsync_CreatesCreditCardForGivenCustomerId()
-#else
-        public void CreateAsync_CreatesCreditCardForGivenCustomerId()
-        {
-            Task.Run(async () =>
-#endif
         {
             Result<Customer> customerResult = await gateway.Customer.CreateAsync(new CustomerRequest());
             Customer customer = customerResult.Target;
@@ -135,10 +129,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual("148", billingAddress.CountryCodeNumeric);
             Assert.IsTrue(Regex.IsMatch(creditCard.UniqueNumberIdentifier, "\\A\\w{32}\\z"));
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Create_CreatesCreditCardWithAVenmoSdkPaymentMethodCode()
@@ -476,13 +466,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task FindAsync_FindsCreditCardByToken()
-#else
-        public void FindAsync_FindsCreditCardByToken()
-        {
-            Task.Run(async () =>
-#endif
         {
             Result<Customer> customerResult = await gateway.Customer.CreateAsync(new CustomerRequest());
             Customer customer = customerResult.Target;
@@ -625,14 +609,8 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task UpdateAsync_UpdatesCreditCardByToken()
-#else
-        public void UpdateAsync_UpdatesCreditCardByToken()
-        {
-            Task.Run(async () =>
-#endif
-        {
+        { 
             Result<Customer> customerResult = await gateway.Customer.CreateAsync(new CustomerRequest());
             Customer customer = customerResult.Target;
 
@@ -668,10 +646,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(DateTime.Now.Year, creditCard.CreatedAt.Value.Year);
             Assert.AreEqual(DateTime.Now.Year, creditCard.UpdatedAt.Value.Year);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Create_SetsDefaultIfSpecified()
@@ -964,13 +938,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task DeleteAsync_DeletesTheCreditCard()
-#else
-        public void DeleteAsync_DeletesTheCreditCard()
-        {
-            Task.Run(async () =>
-#endif
         {
             Result<Customer> customerResult = await gateway.Customer.CreateAsync(new CustomerRequest());
             Customer customer = customerResult.Target;
@@ -991,10 +959,6 @@ namespace Braintree.Tests.Integration
             await gateway.CreditCard.DeleteAsync(creditCard.Token);
             Assert.Throws<NotFoundException>(() => gateway.CreditCard.Find(creditCard.Token));
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         
@@ -1214,13 +1178,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task ExpiringBetweenAsync()
-#else
-        public void ExpiringBetweenAsync()
-        {
-            Task.Run(async () =>
-#endif
         {
             DateTime beginning = new DateTime(2010, 1, 1);
             DateTime end = new DateTime(2010, 12, 31);
@@ -1238,10 +1196,6 @@ namespace Braintree.Tests.Integration
             HashSet<string> uniqueCards = new HashSet<string>(cards);
             Assert.AreEqual(uniqueCards.Count, collection.MaximumCount);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Prepaid()

@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Threading;
 #if net452
 using System.Threading;
 #endif
@@ -69,13 +70,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task GenerateAsync_ReturnsTransactionsSettledOnAGivenDay()
-#else
-        public void GenerateAsync_ReturnsTransactionsSettledOnAGivenDay()
-        {
-            Task.Run(async () =>
-#endif
         {
             TransactionRequest request = new TransactionRequest
             {
@@ -109,10 +104,6 @@ namespace Braintree.Tests.Integration
 
             Assert.IsTrue(mastercards.Count >= 1);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Generate_AcceptsDatesInNonUSFormats()
@@ -181,13 +172,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task GenerateAsync_CanBeGroupedByACustomField()
-#else
-        public void GenerateAsync_CanBeGroupedByACustomField()
-        {
-            Task.Run(async () =>
-#endif
         {
             TransactionRequest request = new TransactionRequest
             {
@@ -225,10 +210,6 @@ namespace Braintree.Tests.Integration
 
             Assert.AreEqual(1, customValues.Count);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
     }
 }
 

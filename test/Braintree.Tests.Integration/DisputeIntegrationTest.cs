@@ -48,13 +48,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task AcceptAsync_changesDisputeStatusToAccepted()
-#else
-        public void AcceptAsync_changesDisputeStatusToAccepted()
-        {
-            Task.Run(async () =>
-#endif
         {
             Dispute dispute = await createSampleDisputeAsync();
             var result = await gateway.Dispute.AcceptAsync(dispute.Id);
@@ -65,10 +59,6 @@ namespace Braintree.Tests.Integration
             Dispute finalizedDispute = finalizedDisputeResult.Target;
             Assert.AreEqual(DisputeStatus.ACCEPTED, finalizedDispute.Status);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Accept_whenDisputeNotOpenErrors()
@@ -82,13 +72,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task AcceptAsync_whenDisputeNotOpenErrors()
-#else
-        public void AcceptAsync_whenDisputeNotOpenErrors()
-        {
-            Task.Run(async () =>
-#endif
         {
             var result = await gateway.Dispute.AcceptAsync("wells_dispute");
 
@@ -97,10 +81,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(ValidationErrorCode.DISPUTE_CAN_ONLY_ACCEPT_OPEN_DISPUTE, result.Errors.ForObject("Dispute").OnField("Status")[0].Code);
             Assert.AreEqual("Disputes can only be accepted when they are in an Open state", result.Errors.ForObject("Dispute").OnField("Status")[0].Message);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Accept_throwsNotFoundExceptionWhenDisputeIsNotFound()
@@ -110,13 +90,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task AcceptAsync_throwsNotFoundExceptionWhenDisputeIsNotFound()
-#else
-        public void AcceptAsync_throwsNotFoundExceptionWhenDisputeIsNotFound()
-        {
-            Task.Run(async () =>
-#endif
         {
             try
             {
@@ -128,10 +102,6 @@ namespace Braintree.Tests.Integration
                 Assert.AreEqual(exception.Message, "dispute with id 'invalid-id' not found");
             }
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void AddFileEvidence_addsEvidence()
@@ -175,13 +145,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task AddFileEvidenceAsync_addsEvidence()
-#else
-        public void AddFileEvidenceAsync_addsEvidence()
-        {
-            Task.Run(async () =>
-#endif
         {
             Dispute dispute = await createSampleDisputeAsync();
             DocumentUpload document = await createSampleDocumentUploadAsync();
@@ -194,10 +158,6 @@ namespace Braintree.Tests.Integration
 
             Assert.NotNull(foundEvidence);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void AddFileEvidence_throwsNotFoundExceptionWhenDisputeOrDocumentIdIsNotFound()
@@ -207,13 +167,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task AddFileEvidenceAsync_throwsNotFoundExceptionWhenDisputeOrDocumentIdIsNotFound()
-#else
-        public void AddFileEvidenceAsync_throwsNotFoundExceptionWhenDisputeOrDocumentIdIsNotFound()
-        {
-            Task.Run(async () =>
-#endif
         {
             try
             {
@@ -225,10 +179,6 @@ namespace Braintree.Tests.Integration
                 Assert.AreEqual(exception.Message, "dispute with id 'invalid-dispute-id' not found");
             }
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void AddFileEvidence_whenDisputeNotOpenErrors()
@@ -247,13 +197,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task AddFileEvidenceAsync_whenDisputeNotOpenErrors()
-#else
-        public void AddFileEvidenceAsync_whenDisputeNotOpenErrors()
-        {
-            Task.Run(async () =>
-#endif
         {
             DocumentUpload document = await createSampleDocumentUploadAsync();
             Dispute dispute = await createSampleDisputeAsync();
@@ -267,10 +211,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(ValidationErrorCode.DISPUTE_CAN_ONLY_ADD_EVIDENCE_TO_OPEN_DISPUTE, result.Errors.ForObject("Dispute").OnField("Status")[0].Code);
             Assert.AreEqual("Evidence can only be attached to disputes that are in an Open state", result.Errors.ForObject("Dispute").OnField("Status")[0].Message);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void AddFileEvidence_failsToAddEvidenceWithUnSupportedCategory()
@@ -290,13 +230,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task AddFileEvidenceAsync_failsToAddEvidenceWithUnsupportedCategory()
-#else
-        public void AddFileEvidenceAsync_failsToAddEvidenceWithUnsupportedCategory()
-        {
-            Task.Run(async () =>
-#endif
         {
             DocumentUpload document = await createSampleDocumentUploadAsync();
             Dispute dispute = await createSampleDisputeAsync();
@@ -312,19 +246,9 @@ namespace Braintree.Tests.Integration
 
             Assert.AreEqual(ValidationErrorCode.DISPUTE_CAN_ONLY_CREATE_EVIDENCE_WITH_VALID_CATEGORY, result.Errors.ForObject("Dispute").OnField("Evidence")[0].Code);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
-#if netcore
         public async Task AddTextEvidenceAsync_addsTextEvidence()
-#else
-        public void AddTextEvidenceAsync_addsTextEvidence()
-        {
-            Task.Run(async () =>
-#endif
         {
             Dispute dispute = await createSampleDisputeAsync();
 
@@ -337,10 +261,6 @@ namespace Braintree.Tests.Integration
             Assert.Null(evidence.SentToProcessorAt);
             Assert.Null(evidence.Url);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void AddTextEvidence_addsEvidenceWithCateogry()
@@ -381,13 +301,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task AddTextEvidenceAsync_failsToAddEvidenceWithUnSupportedCategory()
-#else
-        public void AddTextEvidenceAsync_failsToAddEvidenceWithUnSupportedCategory()
-        {
-            Task.Run(async () =>
-#endif
         {
             Dispute dispute = await createSampleDisputeAsync();
 
@@ -402,10 +316,6 @@ namespace Braintree.Tests.Integration
 
             Assert.AreEqual(ValidationErrorCode.DISPUTE_CAN_ONLY_CREATE_EVIDENCE_WITH_VALID_CATEGORY, result.Errors.ForObject("Dispute").OnField("Evidence")[0].Code);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void AddTextEvidence_throwsNotFoundExceptionWhenDisputeNotFound()
@@ -415,13 +325,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task AddTextEvidenceAsync_throwsNotFoundExceptionWhenDisputeNotFound()
-#else
-        public void AddTextEvidenceAsync_throwsNotFoundExceptionWhenDisputeNotFound()
-        {
-            Task.Run(async () =>
-#endif
         {
             try
             {
@@ -433,10 +337,6 @@ namespace Braintree.Tests.Integration
                 Assert.AreEqual(exception.Message, "Dispute with ID 'invalid-dispute-id' not found");
             }
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void AddTextEvidence_whenDisputeNotOpenErrors()
@@ -454,13 +354,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task AddTextEvidenceAsync_whenDisputeNotOpenErrors()
-#else
-        public void AddTextEvidenceAsync_whenDisputeNotOpenErrors()
-        {
-            Task.Run(async () =>
-#endif
         {
             Dispute dispute = await createSampleDisputeAsync();
 
@@ -473,10 +367,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(ValidationErrorCode.DISPUTE_CAN_ONLY_ADD_EVIDENCE_TO_OPEN_DISPUTE, result.Errors.ForObject("Dispute").OnField("Status")[0].Code);
             Assert.AreEqual("Evidence can only be attached to disputes that are in an Open state", result.Errors.ForObject("Dispute").OnField("Status")[0].Message);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void AddTextEvidence_showsNewRecordInFind()
@@ -493,13 +383,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task AddTextEvidenceAsync_showsNewRecordInFind()
-#else
-        public void AddTextEvidenceAsync_showsNewRecordInFind()
-        {
-            Task.Run(async () =>
-#endif
         {
             Dispute dispute = await createSampleDisputeAsync();
 
@@ -513,10 +397,6 @@ namespace Braintree.Tests.Integration
 
             Assert.AreEqual(evidence.Id, foundEvidence.Id);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Finalize_changesDisputeStatusToDisputed()
@@ -561,13 +441,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task FinalizeAsync_changesDisputeStatusToDisputed()
-#else
-        public void FinalizeAsync_changesDisputeStatusToDisputed()
-        {
-            Task.Run(async () =>
-#endif
         {
             Dispute dispute = await createSampleDisputeAsync();
             var result = gateway.Dispute.Finalize(dispute.Id);
@@ -578,10 +452,6 @@ namespace Braintree.Tests.Integration
             Dispute finalizedDispute = finalizedDisputeResult.Target;
             Assert.AreEqual(DisputeStatus.DISPUTED, finalizedDispute.Status);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Finalize_whenDisputeNotOpenErrors()
@@ -595,13 +465,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task FinalizeAsync_whenDisputeNotOpenErrors()
-#else
-        public void FinalizeAsync_whenDisputeNotOpenErrors()
-        {
-            Task.Run(async () =>
-#endif
         {
             var result = await gateway.Dispute.FinalizeAsync("wells_dispute");
 
@@ -610,10 +474,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(ValidationErrorCode.DISPUTE_CAN_ONLY_FINALIZE_OPEN_DISPUTE, result.Errors.ForObject("Dispute").OnField("Status")[0].Code);
             Assert.AreEqual("Disputes can only be finalized when they are in an Open state", result.Errors.ForObject("Dispute").OnField("Status")[0].Message);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Finalize_whenDisputeNotFoundErrors()
@@ -623,13 +483,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task FinalizeAsync_whenDisputeNotFoundErrors()
-#else
-        public void FinalizeAsync_whenDisputeNotFoundErrors()
-        {
-            Task.Run(async () =>
-#endif
         {
             try
             {
@@ -641,10 +495,6 @@ namespace Braintree.Tests.Integration
                 Assert.AreEqual(exception.Message, "dispute with id 'invalid-id' not found");
             }
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Find_returnsDisputeWithGivenId()
@@ -659,13 +509,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task FindAsync_returnsDisputeWithGivenId()
-#else
-        public void FindAsync_returnsDisputeWithGivenId()
-        {
-            Task.Run(async () =>
-#endif
         {
             Result<Dispute> disputeResult = await gateway.Dispute.FindAsync("open_dispute");
             Dispute dispute = disputeResult.Target;
@@ -676,10 +520,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(DisputeStatus.OPEN, dispute.Status);
             Assert.AreEqual("open_disputed_transaction", dispute.Transaction.Id);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Find_throwsNotFoundExceptionWhenDisputeNotFound()
@@ -689,13 +529,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task FindAsync_throwsNotFoundExceptionWhenDisputeNotFound()
-#else
-        public void FindAsync_throwsNotFoundExceptionWhenDisputeNotFound()
-        {
-            Task.Run(async () =>
-#endif
         {
             try
             {
@@ -707,10 +541,6 @@ namespace Braintree.Tests.Integration
                 Assert.AreEqual(exception.Message, "dispute with id 'invalid-id' not found");
             }
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void RemoveEvidence_removesEvidenceFromTheDispute()
@@ -731,13 +561,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task RemoveEvidenceAsync_removesEvidenceFromTheDispute()
-#else
-        public void RemoveEvidenceAsync_removesEvidenceFromTheDispute()
-        {
-            Task.Run(async () =>
-#endif
         {
             Dispute dispute = await createSampleDisputeAsync();
 
@@ -753,10 +577,6 @@ namespace Braintree.Tests.Integration
 
             Assert.AreEqual(0, editedDispute.Evidence.Count);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void RemoveEvidence_whenDisputeOrEvidenceNotFoundThrowsNotFoundException()
@@ -766,13 +586,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task RemoveEvidenceAsync_whenDisputeOrEvidenceNotFoundThrowsNotFoundException()
-#else
-        public void RemoveEvidenceAsync_whenDisputeOrEvidenceNotFoundThrowsNotFoundException()
-        {
-            Task.Run(async () =>
-#endif
         {
             try
             {
@@ -784,10 +598,6 @@ namespace Braintree.Tests.Integration
                 Assert.AreEqual(exception.Message, "evidence with id 'invalid-evidence-id' for dispute with id 'invalid-dispute-id' not found");
             }
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void RemoveEvidence_errorsWhenDisputeNotOpen()
@@ -809,13 +619,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task RemoveEvidenceAsync_errorsWhenDisputeNotOpen()
-#else
-        public void RemoveEvidenceAsync_errorsWhenDisputeNotOpen()
-        {
-            Task.Run(async () =>
-#endif
         {
             Dispute dispute = await createSampleDisputeAsync();
 
@@ -831,10 +635,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(ValidationErrorCode.DISPUTE_CAN_ONLY_REMOVE_EVIDENCE_FROM_OPEN_DISPUTE, result.Errors.ForObject("Dispute").OnField("Status")[0].Code);
             Assert.AreEqual("Evidence can only be removed from disputes that are in an Open state", result.Errors.ForObject("Dispute").OnField("Status")[0].Message);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Search_withEmptyResult()

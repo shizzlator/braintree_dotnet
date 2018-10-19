@@ -98,14 +98,8 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task FindAsync_FindsCustomerWithGivenId()
-#else
-        public void FindAsync_FindsCustomerWithGivenId()
-        {
-            Task.Run(async () =>
-#endif
-        {
+        { 
             string id = Guid.NewGuid().ToString();
             var createRequest = new CustomerRequest
             {
@@ -169,10 +163,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual("60622", customer.Addresses[0].PostalCode);
             Assert.AreEqual("United States of America", customer.Addresses[0].CountryName);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Find_IncludesApplePayCardsInPaymentMethods()
@@ -431,13 +421,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task CreateAsync_WithoutCustomerRequestObject()
-#else
-        public void CreateAsync_WithoutCustomerRequestObject()
-        {
-            Task.Run(async () =>
-#endif
         {
             Result<Customer> customerResult = await gateway.Customer.CreateAsync();
             Assert.IsTrue(customerResult.IsSuccess());
@@ -445,10 +429,6 @@ namespace Braintree.Tests.Integration
             Customer customer = customerResult.Target;
             Assert.IsNotNull(customer.Id);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Create_CreatesCustomerWithSpecifiedValues()
@@ -495,13 +475,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task CreateAsync_CreatesCustomerWithSpecifiedValues()
-#else
-        public void CreateAsync_CreatesCustomerWithSpecifiedValues()
-        {
-            Task.Run(async () =>
-#endif
         {
             var createRequest = new CustomerRequest()
             {
@@ -545,10 +519,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual("MAC", billingAddress.CountryCodeAlpha3);
             Assert.AreEqual("446", billingAddress.CountryCodeNumeric);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Create_withSecurityParams()
@@ -1234,13 +1204,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task UpdateAsync_UpdatesCustomerWithNewValues()
-#else
-        public void UpdateAsync_UpdatesCustomerWithNewValues()
-        {
-            Task.Run(async () =>
-#endif
         {
             string oldId = Guid.NewGuid().ToString();
             string newId = Guid.NewGuid().ToString();
@@ -1284,10 +1248,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(DateTime.Now.Year, updatedCustomer.CreatedAt.Value.Year);
             Assert.AreEqual(DateTime.Now.Year, updatedCustomer.UpdatedAt.Value.Year);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Update_UpdatesCustomerAndNestedValues()
@@ -1575,13 +1535,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task DeleteAsync_DeletesTheCustomer()
-#else
-        public void DeleteAsync_DeletesTheCustomer()
-        {
-            Task.Run(async () =>
-#endif
         {
             string id = Guid.NewGuid().ToString();
             await gateway.Customer.CreateAsync(new CustomerRequest() { Id = id });
@@ -1592,10 +1546,6 @@ namespace Braintree.Tests.Integration
 
             Assert.Throws<NotFoundException>(() => gateway.Customer.Find(id));
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void All() {
@@ -1613,13 +1563,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task AllAsync()
-#else
-        public void AllAsync()
-        {
-            Task.Run(async () =>
-#endif
         {
             ResourceCollection<Customer> collection = await gateway.Customer.AllAsync();
 
@@ -1633,10 +1577,6 @@ namespace Braintree.Tests.Integration
 
             Assert.AreEqual(uniqueItems.Count, collection.MaximumCount);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Search_FindDuplicateCardsGivenPaymentMethodToken()
@@ -1743,13 +1683,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task SearchAsync_OnAllTextFields()
-#else
-        public void SearchAsync_OnAllTextFields()
-        {
-            Task.Run(async () =>
-#endif
         {
             string creditCardToken = string.Format("cc{0}", new Random().Next(1000000).ToString());
 
@@ -1813,10 +1747,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(1, collection.MaximumCount);
             Assert.AreEqual(customer.Id, collection.FirstItem.Id);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Search_OnCreatedAt()

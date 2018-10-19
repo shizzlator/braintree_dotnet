@@ -41,13 +41,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task SettleAsync()
-#else
-        public void SettleAsync()
-        {
-            Task.Run(async () =>
-#endif
         {
             var request = new TransactionRequest
             {
@@ -64,10 +58,6 @@ namespace Braintree.Tests.Integration
 
             Assert.AreEqual(TransactionStatus.SETTLED, transaction.Status);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void SettlementConfirm()
@@ -89,13 +79,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task SettlementConfirmAsync()
-#else
-        public void SettlementConfirmAsync()
-        {
-            Task.Run(async () =>
-#endif
         {
             var request = new TransactionRequest
             {
@@ -112,10 +96,6 @@ namespace Braintree.Tests.Integration
 
             Assert.AreEqual(TransactionStatus.SETTLEMENT_CONFIRMED, transaction.Status);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void SettlementPending()
@@ -156,13 +136,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task SettlementDeclineAsync()
-#else
-        public void SettlementDeclineAsync()
-        {
-            Task.Run(async () =>
-#endif
         {
             var request = new TransactionRequest
             {
@@ -179,9 +153,5 @@ namespace Braintree.Tests.Integration
 
             Assert.AreEqual(TransactionStatus.SETTLEMENT_DECLINED, transaction.Status);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
     }
 }

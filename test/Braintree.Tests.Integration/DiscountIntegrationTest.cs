@@ -63,13 +63,8 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task AllAsync_ReturnsAllDiscounts()
-#else
-        public void AllAsync_ReturnsAllDiscounts()
-        {
-            Task.Run(async () =>
-#endif
+
         {
             string discountId = string.Format("dotnet_discount{0}", new Random().Next(1000000).ToString());
 
@@ -104,9 +99,5 @@ namespace Braintree.Tests.Integration
             Assert.IsNotNull(discount.CreatedAt);
             Assert.IsNotNull(discount.UpdatedAt);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
     }
 }

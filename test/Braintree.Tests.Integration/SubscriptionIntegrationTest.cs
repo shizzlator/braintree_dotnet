@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Threading;
 #if net452
 using System.Threading;
 #endif
@@ -90,13 +91,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task CreateAsync_SubscriptionWithoutTrial()
-#else
-        public void CreateAsync_SubscriptionWithoutTrial()
-        {
-            Task.Run(async () =>
-#endif
         {
             TestPlan plan = PlanFixture.PLAN_WITHOUT_TRIAL;
 
@@ -138,10 +133,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual("USD", subscription.StatusHistory[0].CurrencyIsoCode);
             Assert.AreEqual("integration_trialless_plan", subscription.StatusHistory[0].PlanId);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Create_SubscriptionWithPaymentMethodNonce()
@@ -820,13 +811,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task FindAsync()
-#else
-        public void FindAsync()
-        {
-            Task.Run(async () =>
-#endif
         {
             TestPlan plan = PlanFixture.PLAN_WITH_TRIAL;
             SubscriptionRequest request = new SubscriptionRequest
@@ -843,10 +828,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(subscription.PaymentMethodToken, creditCard.Token);
             Assert.AreEqual(subscription.PlanId, plan.Id);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Find_FindsErrorsOutOnWhitespaceIds()
@@ -887,13 +868,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task SearchAsync_OnBillingCyclesRemainingIs()
-#else
-        public void SearchAsync_OnBillingCyclesRemainingIs()
-        {
-            Task.Run(async () =>
-#endif
         {
             SubscriptionRequest request1 = new SubscriptionRequest
             {
@@ -925,10 +900,6 @@ namespace Braintree.Tests.Integration
             Assert.IsTrue(TestHelper.IncludesSubscription(collection, subscription1));
             Assert.IsFalse(TestHelper.IncludesSubscription(collection, subscription2));
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Search_OnDaysPastDueBetween()
@@ -1574,13 +1545,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task UpdateAsync_Id()
-#else
-        public void UpdateAsync_Id()
-        {
-            Task.Run(async () =>
-#endif
         {
             string oldId = "old-id-" + new Random().Next(1000000);
             TestPlan plan = PlanFixture.PLAN_WITHOUT_TRIAL;
@@ -1606,10 +1571,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(newId, updatedSubscription.Id);
             Assert.IsNotNull(gateway.Subscription.Find(newId));
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void UpdatePlan()
@@ -2329,13 +2290,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task CancelAsync()
-#else
-        public void CancelAsync()
-        {
-            Task.Run(async () =>
-#endif
         {
             TestPlan plan = PlanFixture.PLAN_WITHOUT_TRIAL;
             SubscriptionRequest request = new SubscriptionRequest
@@ -2352,10 +2307,6 @@ namespace Braintree.Tests.Integration
             Subscription canceledSubscription = await gateway.Subscription.FindAsync(createResult.Target.Id);
             Assert.AreEqual(SubscriptionStatus.CANCELED, canceledSubscription.Status);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void RetryCharge_WithoutAmount()
@@ -2381,13 +2332,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task RetryChargeAsync_WithoutAmount()
-#else
-        public void RetryChargeAsync_WithoutAmount()
-        {
-            Task.Run(async () =>
-#endif
         {
             SubscriptionRequest request = new SubscriptionRequest
             {
@@ -2409,10 +2354,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(TransactionType.SALE, transaction.Type);
             Assert.AreEqual(TransactionStatus.AUTHORIZED, transaction.Status);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void RetryCharge_With_SubmitForSettlement()
@@ -2438,13 +2379,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task RetryChargeAsync_With_SubmitForSettlement()
-#else
-        public void RetryChargeAsync_With_SubmitForSettlement()
-        {
-            Task.Run(async () =>
-#endif
         {
             SubscriptionRequest request = new SubscriptionRequest
             {
@@ -2466,10 +2401,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(TransactionType.SALE, transaction.Type);
             Assert.AreEqual(TransactionStatus.SUBMITTED_FOR_SETTLEMENT, transaction.Status);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void RetryCharge_WithAmount()
@@ -2495,13 +2426,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task RetryChargeAsync_WithAmount()
-#else
-        public void RetryChargeAsync_WithAmount()
-        {
-            Task.Run(async () =>
-#endif
         {
             SubscriptionRequest request = new SubscriptionRequest
             {
@@ -2523,10 +2448,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(TransactionType.SALE, transaction.Type);
             Assert.AreEqual(TransactionStatus.AUTHORIZED, transaction.Status);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void RetryCharge_WithAmount_And_SubmitForSettlement()
@@ -2552,13 +2473,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task RetryChargeAsync_WithAmount_And_SubmitForSettlement()
-#else
-        public void RetryChargeAsync_WithAmount_And_SubmitForSettlement()
-        {
-            Task.Run(async () =>
-#endif
         {
             SubscriptionRequest request = new SubscriptionRequest
             {
@@ -2580,10 +2495,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(TransactionType.SALE, transaction.Type);
             Assert.AreEqual(TransactionStatus.SUBMITTED_FOR_SETTLEMENT, transaction.Status);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void ParsesUSCultureProperlyForAppsInOtherCultures()

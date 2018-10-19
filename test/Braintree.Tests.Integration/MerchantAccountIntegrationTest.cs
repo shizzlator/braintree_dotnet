@@ -82,13 +82,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task CreateAsync_WithoutId()
-#else
-        public void CreateAsync_WithoutId()
-        {
-            Task.Run(async () =>
-#endif
         {
             var request = createRequest(null);
             Result<MerchantAccount> result = await gateway.MerchantAccount.CreateAsync(request);
@@ -101,10 +95,6 @@ namespace Braintree.Tests.Integration
             Assert.IsFalse(merchantAccount.MasterMerchantAccount.IsSubMerchant);
             Assert.IsTrue(merchantAccount.Id != null);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Create_WithId()
@@ -189,13 +179,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task UpdateAsync_UpdatesAllFields()
-#else
-        public void UpdateAsync_UpdatesAllFields()
-        {
-            Task.Run(async () =>
-#endif
         {
             var request = deprecatedCreateRequest(null);
             Result<MerchantAccount> result = await gateway.MerchantAccount.CreateAsync(request);
@@ -230,10 +214,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual("8798", merchantAccount.FundingDetails.AccountNumberLast4);
             Assert.AreEqual("Job Leoggs OH", merchantAccount.FundingDetails.Descriptor);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Create_HandlesRequiredValidationErrors()
@@ -363,23 +343,13 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task FindAsync()
-#else
-        public void FindAsync()
-        {
-            Task.Run(async () =>
-#endif
         {
             Result<MerchantAccount> result = await gateway.MerchantAccount.CreateAsync(createRequest(null));
             MerchantAccount merchantAccount = result.Target;
             MerchantAccount foundMerchantAccount = await gateway.MerchantAccount.FindAsync(merchantAccount.Id);
             Assert.AreEqual(merchantAccount.Id, foundMerchantAccount.Id);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void RetrievesCurrencyIsoCode()
@@ -417,13 +387,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task CreateForCurrencyAsync()
-#else
-        public void CreateForCurrencyAsync()
-        {
-            Task.Run(async () =>
-#endif
         {
             gateway = new BraintreeGateway(
                 "client_id$development$signup_client_id",
@@ -449,10 +413,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual("testId", result.Target.Id);
             Assert.AreEqual("GBP", result.Target.CurrencyIsoCode);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void CreateForCurrency_HandlesAlreadyExistingMerchantAccountForCurrency()

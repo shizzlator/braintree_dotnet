@@ -63,17 +63,12 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task AllAsync_ReturnsAllPlans()
-#else
-        public void AllAsync_ReturnsAllPlans()
-        {
-            Task.Run(async () =>
-#endif
         {
             string planToken = string.Format("plan{0}", new Random().Next(1000000).ToString());
 
-            await service.PostAsync(service.MerchantPath() + "/plans/create_plan_for_tests", new PlanRequestForTests {
+            await service.PostAsync(service.MerchantPath() + "/plans/create_plan_for_tests", new PlanRequestForTests
+            {
                 BillingDayOfMonth = 1,
                 BillingFrequency = 1,
                 CurrencyIsoCode = "USD",
@@ -90,7 +85,7 @@ namespace Braintree.Tests.Integration
 
             Plan plan = collection.Find
             (
-                delegate(Plan p)
+                delegate (Plan p)
                 {
                     return p.Id == planToken;
                 }
@@ -105,10 +100,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(100.00M, plan.Price);
             Assert.AreEqual(false, plan.TrialPeriod);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void All_ReturnPlansWithAddOnsAndDiscounts()

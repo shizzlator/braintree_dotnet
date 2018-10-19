@@ -152,13 +152,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task SearchAsync_OnAllTextFields()
-#else
-        public void SearchAsync_OnAllTextFields()
-        {
-            Task.Run(async () =>
-#endif
         {
             string creditCardToken = string.Format("cc{0}", new Random().Next(1000000).ToString());
             string firstName = string.Format("Tim{0}", new Random().Next(1000000).ToString());
@@ -264,10 +258,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(1, collection.MaximumCount);
             Assert.AreEqual(transaction.Id, collection.FirstItem.Id);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Search_OnTextNodeOperators()
@@ -1426,13 +1416,7 @@ namespace Braintree.Tests.Integration
 
 
         [Test]
-#if netcore
         public async Task SaleAsync_ReturnsSuccessfulResponse()
-#else
-        public void SaleAsync_ReturnsSuccessfulResponse()
-        {
-            Task.Run(async () =>
-#endif
         {
             var request = new TransactionRequest
             {
@@ -1463,10 +1447,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual("2009", creditCard.ExpirationYear);
             Assert.AreEqual("05/2009", creditCard.ExpirationDate);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Sale_ReturnsSuccessfulResponseWithUsBankAccount()
@@ -3654,13 +3634,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task HoldInEscrowAsync_AfterSale()
-#else
-        public void HoldInEscrowAsync_AfterSale()
-        {
-            Task.Run(async () =>
-#endif
         {
             TransactionRequest request = new TransactionRequest
             {
@@ -3683,10 +3657,6 @@ namespace Braintree.Tests.Integration
                 transaction.EscrowStatus
             );
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void HoldInEscrow_AfterSaleFailsForMasterMerchantAccount()
@@ -3744,13 +3714,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task ReleaseFromEscrowAsync()
-#else
-        public void ReleaseFromEscrowAsync()
-        {
-            Task.Run(async () =>
-#endif
         {
             TransactionRequest request = new TransactionRequest
             {
@@ -3780,10 +3744,6 @@ namespace Braintree.Tests.Integration
                 transaction.EscrowStatus
             );
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void ReleaseFromEscrow_FailsForNonSubmittableTransaction()
@@ -3847,13 +3807,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task CancelReleaseAsync()
-#else
-        public void CancelReleaseAsync()
-        {
-            Task.Run(async () =>
-#endif
         {
             TransactionRequest request = new TransactionRequest
             {
@@ -3887,10 +3841,6 @@ namespace Braintree.Tests.Integration
                 transaction.EscrowStatus
             );
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void CancelRelease_FailsForTransactionsNotPendingRelease()
@@ -6198,13 +6148,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task CreditAsync_WithValidParams()
-#else
-        public void CreditAsync_WithValidParams()
-        {
-            Task.Run(async () =>
-#endif
         {
             TransactionRequest request = new TransactionRequest
             {
@@ -6231,10 +6175,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual("2009", creditCard.ExpirationYear);
             Assert.AreEqual("05/2009", creditCard.ExpirationDate);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Credit_SpecifyingMerchantAccountId()
@@ -6373,13 +6313,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task FindAsync_WithAValidTransactionId()
-#else
-        public void FindAsync_WithAValidTransactionId()
-        {
-            Task.Run(async () =>
-#endif
         {
             TransactionRequest request = new TransactionRequest
             {
@@ -6400,10 +6334,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(TransactionStatus.AUTHORIZED, foundTransaction.Status);
             Assert.AreEqual("05/2008", foundTransaction.CreditCard.ExpirationDate);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Find_WithBadId()
@@ -6534,13 +6464,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task VoidAsync_VoidsTheTransaction()
-#else
-        public void VoidAsync_VoidsTheTransaction()
-        {
-            Task.Run(async () =>
-#endif
         {
             TransactionRequest request = new TransactionRequest
             {
@@ -6560,10 +6484,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(transaction.Id, result.Target.Id);
             Assert.AreEqual(TransactionStatus.VOIDED, result.Target.Status);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Void_WithBadId()
@@ -6617,13 +6537,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task SubmitForSettlementAsync_WithoutAmount()
-#else
-        public void SubmitForSettlementAsync_WithoutAmount()
-        {
-            Task.Run(async () =>
-#endif
         {
             TransactionRequest request = new TransactionRequest
             {
@@ -6645,10 +6559,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(SandboxValues.TransactionAmount.AUTHORIZE, result.Target.Amount);
             Assert.IsNull(result.Message);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void SubmitForSettlement_WithAmount()
@@ -6672,13 +6582,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task SubmitForSettlementAsync_WithAmount()
-#else
-        public void SubmitForSettlementAsync_WithAmount()
-        {
-            Task.Run(async () =>
-#endif
         {
             TransactionRequest request = new TransactionRequest
             {
@@ -6698,10 +6602,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(TransactionStatus.SUBMITTED_FOR_SETTLEMENT, result.Target.Status);
             Assert.AreEqual(50.00, result.Target.Amount);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void SubmitForSettlement_WithOrderId()
@@ -7358,13 +7258,7 @@ namespace Braintree.Tests.Integration
 
         #pragma warning disable 0618
         [Test]
-#if netcore
         public async Task RefundAsync_WithABasicTransaction()
-#else
-        public void RefundAsync_WithABasicTransaction()
-        {
-            Task.Run(async () =>
-#endif
         {
             TransactionRequest request = new TransactionRequest
             {
@@ -7405,10 +7299,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(refund.Id, firstTransaction.RefundIds[0]);
             Assert.AreEqual(firstTransaction.Id, refund.RefundedTransactionId);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
         #pragma warning restore 0618
 
         [Test]
@@ -7438,13 +7328,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task RefundAsync_WithAPartialAmount()
-#else
-        public void RefundAsync_WithAPartialAmount()
-        {
-            Task.Run(async () =>
-#endif
         {
             TransactionRequest request = new TransactionRequest
             {
@@ -7469,10 +7353,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(TransactionType.CREDIT, result.Target.Type);
             Assert.AreEqual(decimal.Parse("500.00"), result.Target.Amount);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Refund_WithOrderId()
@@ -7506,13 +7386,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task RefundAsync_WithOrderId()
-#else
-        public void RefundAsync_WithOrderId()
-        {
-            Task.Run(async () =>
-#endif
         {
             TransactionRequest request = new TransactionRequest
             {
@@ -7542,10 +7416,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual(TransactionType.CREDIT, result.Target.Type);
             Assert.AreEqual("1234567", result.Target.OrderId);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void Refund_WithAmountOrderId()
@@ -7794,13 +7664,7 @@ namespace Braintree.Tests.Integration
         }
 
         [Test]
-#if netcore
         public async Task CloneTransactionAsync()
-#else
-        public void CloneTransactionAsync()
-        {
-            Task.Run(async () =>
-#endif
         {
             TransactionRequest request = new TransactionRequest
             {
@@ -7860,10 +7724,6 @@ namespace Braintree.Tests.Integration
             Assert.AreEqual("Carl", cloneTransaction.BillingAddress.FirstName);
             Assert.AreEqual("Andrew", cloneTransaction.ShippingAddress.FirstName);
         }
-#if net452
-            ).GetAwaiter().GetResult();
-        }
-#endif
 
         [Test]
         public void CloneTransactionAndSubmitForSettlement()
